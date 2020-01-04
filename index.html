@@ -9,13 +9,29 @@
   <body>
     <h1>Service Worker</h1>
     <output></output>
+    <button onclick="update()">Update Check</button>
   </body>
 
   <script type="text/javascript">
+    function update() {
+      navigator.serviceWorker.getRegistration().then(registration => {
+        registration.update();
+      });
+    }
+
     if ("serviceWorker" in navigator) {
+      /**
+      Update via Cache:
+        imports: The HTTP browser cache will never be checked for the entry point, but will be used for the imported scripts, default on Chrome 68+
+
+        all: The HTTP browser cache will be used for the entry point file, and imported scripts; default on some browser (max = 24 hours)
+
+        none: The HTTP browser will not be consulted; every check will go to the network.
+      */
       navigator.serviceWorker
         .register("service-worker.js", {
-          scope: "/"
+          scope: "/",
+          updateViaCache: 'imports'
         })
         .then(registration => {
           const scope = registration.scope;
@@ -40,9 +56,11 @@
             const swInstalling = registration.installing;
             swInstalling.addEventListener("statechange", () => {
               if (swInstalling.state === "installed") {
-                console.log(
-                  `App has new feature, Please refresh to access that.`
-                );
+                document.querySelector("output").innerHTML =
+                  "A new service worker is installed and waiting.";
+              } else {
+                document.querySelector("output").innerHTML =
+                  "A new service worker is controlling the page.";
               }
             });
           });
