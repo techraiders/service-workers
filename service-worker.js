@@ -1,8 +1,6 @@
 console.log(`We are a service worker.`);
-self.addEventListener("install", event => {
-  console.log(`Install event`);
-});
 
-self.addEventListener("activate", event => {
-  console.log("Activate event");
-});
+/** Use below syntax to import multiple files of service workers, rather than multile importScript statements, so that below statement guarantees all script will be downloaded in parallel but will execute in sequence */
+importScripts("events.js", "events2.js");
+
+console.log("After loading the events.js script");
