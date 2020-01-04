@@ -10,12 +10,18 @@
     <h1>Service Worker</h1>
     <output></output>
     <button onclick="update()">Update Check</button>
+    <button onclick="unregister()">Unregister()</button>
   </body>
 
   <script type="text/javascript">
     function update() {
       navigator.serviceWorker.getRegistration().then(registration => {
         registration.update();
+      });
+    }
+    function unregister() {
+      navigator.serviceWorker.getRegistration().then(registration => {
+        registration.unregister();
       });
     }
 
@@ -31,7 +37,7 @@
       navigator.serviceWorker
         .register("service-worker.js", {
           scope: "/",
-          updateViaCache: 'imports'
+          updateViaCache: "imports"
         })
         .then(registration => {
           const scope = registration.scope;
