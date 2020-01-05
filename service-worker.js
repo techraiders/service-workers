@@ -10,6 +10,22 @@ try {
 
 self.addEventListener("fetch", event => {
   console.log(`Fetching ${event.request.url}`);
-  const response = new Response(`Fetching ${event.request.url}`);
+  const body = `
+    <!DOCTYPE html>
+      <html>
+        <head>
+          <title> Service Worker HTML generation </title>
+        </head>
+        <body>
+          <h1>Fetching ${event.request.url}</h1>
+        </body>
+      </html>`;
+  const response = new Response(body, {
+    status: 200,
+    statusText: "OK",
+    headers: {
+      "Content-Type": "text/html"
+    }
+  });
   event.respondWith(response);
 });
