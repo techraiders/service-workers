@@ -10,6 +10,14 @@ try {
 
 self.addEventListener("fetch", event => {
   console.log(`Fetching ${event.request.url}`);
+  const parsedUrl = new URL(event.request.url);
+  if (parsedUrl.pathname === "/") {
+    return;
+  }
+
+  if (parsedUrl.pathname.match(/^\/api\/*/)) {
+    return;
+  }
   const body = `
     <!DOCTYPE html>
       <html>
