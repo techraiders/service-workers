@@ -28,4 +28,13 @@ self.addEventListener("fetch", event => {
     }
   });
   event.respondWith(response);
+  /*
+  event.respondWith(
+    new Promise((resolve, reject) => {
+      fetch("/").then(response => {
+        const clonedResponse = response.clone();
+        resolve(response);
+      });
+    })
+  ); */
 });
