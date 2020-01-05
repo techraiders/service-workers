@@ -16,6 +16,17 @@ self.addEventListener("fetch", event => {
   }
 
   if (parsedUrl.pathname.match(/^\/api\/*/)) {
+    const object = {
+      temp: 56
+    }
+    const jsonResponse = new Response(JSON.stringify(object), {
+      status: 200,
+      statusText: 'OK',
+      headers: {
+        'Content-Type' : 'application/json'
+      }
+    });
+    event.respondWith(jsonResponse);
     return;
   }
   const body = `
