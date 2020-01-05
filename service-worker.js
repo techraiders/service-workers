@@ -11,6 +11,15 @@ try {
 self.addEventListener("fetch", event => {
   console.log(`Fetching ${event.request.url}`);
   const parsedUrl = new URL(event.request.url);
+
+  /**
+   * Always clone the request or response before reading it, else if you read without       cloning, browser will not be able to proceed with that request or response.
+   */
+  if (event.request.method === "POST") {
+    const clonedRequest = event.request.clone();
+    return;
+  }
+
   if (parsedUrl.pathname === "/") {
     return;
   }
@@ -18,12 +27,12 @@ self.addEventListener("fetch", event => {
   if (parsedUrl.pathname.match(/^\/api\/*/)) {
     const object = {
       temp: 56
-    }
+    };
     const jsonResponse = new Response(JSON.stringify(object), {
       status: 200,
-      statusText: 'OK',
+      statusText: "OK",
       headers: {
-        'Content-Type' : 'application/json'
+        "Content-Type": "application/json"
       }
     });
     event.respondWith(jsonResponse);
