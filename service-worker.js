@@ -18,6 +18,19 @@ self.addEventListener("fetch", event => {
         </head>
         <body>
           <h1>Fetching ${event.request.url}</h1>
+          <ul>
+            <li> Cache: ${event.request.cache} </li>
+            <li> Credential: ${event.request.credential} </li>
+            <li>
+              Destination: ${event.request.destination}
+            </li>
+            <li>
+              Method: ${event.request.method}
+            </li>
+            <li>
+              Referrer: ${event.request.referrer}
+            </li>
+          </ul>
         </body>
       </html>`;
   const response = new Response(body, {
